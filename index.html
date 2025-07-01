@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Aesthetic Anime Style with Flowing Glow</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500&display=swap" rel="stylesheet" />
+  <style>
+    /* Reset */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Outfit', sans-serif;
+      background: radial-gradient(circle at center, #2c2c36 0%, #3a2d41 50%, #1d1c2b 100%);
+      color: #f1f1f1;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      cursor: default;
+      position: relative;
+    }
+
+    .star {
+      position: absolute;
+      background: currentColor;
+      border-radius: 50%;
+      pointer-events: none;
+      animation: twinkle var(--duration) ease-in-out infinite;
+      animation-delay: var(--delay);
+      opacity: 0;
+      will-change: opacity;
+      mix-blend-mode: screen;
+    }
+
+    @keyframes twinkle {
+      0%, 100% { 
+        opacity: 0;
+        transform: scale(0.3);
+      }
+      50% {
+        opacity: var(--opacity);
+        transform: scale(1);
+      }
+    }
+
+    body::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: 
+        radial-gradient(
+          circle at var(--mouse-x) var(--mouse-y),
+          rgba(247, 178, 229, 0.05) 0%,
+          transparent 70%
+        );
+      transition: background 0.5s linear;
+      z-index: 0;
+      will-change: background;
+    }
+
+    body::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+      mix-blend-mode: overlay;
+      z-index: 0;
+    }
+
+    .card {
+      position: relative;
+      background: rgba(255, 255, 255, 0.09);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(20px);
+      border-radius: 20px;
+      padding: 2.5rem 3.5rem;
+      max-width: 540px;
+      display: flex;
+      gap: 1.8rem;
+      align-items: center;
+      user-select: none;
+      filter: drop-shadow(0 0 10px rgba(247, 178, 229, 0.5));
+      overflow: visible;
+      box-shadow:
+        0 0 20px 2px rgba(247, 178, 229, 0.3),
+        0 0 30px 5px rgba(247, 178, 229, 0.2),
+        inset 0 0 20px 2px rgba(247, 178, 229, 0.1);
+      z-index: 1;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      top: -10px;
+      left: -10px;
+      right: -10px;
+      bottom: -10px;
+      border-radius: 30px;
+      pointer-events: none;
+      background: 
+        linear-gradient(90deg, 
+          transparent 0%, 
+          rgba(247, 178, 229, 0.8) 30%,
+          rgba(247, 178, 229, 0.6) 70%,
+          transparent 100%),
+        linear-gradient(180deg, 
+          transparent 0%,
+          rgba(247, 178, 229, 0.6) 50%,
+          transparent 100%);
+      background-size: 300% 300%;
+      filter: blur(16px);
+      animation: flowingBorder 3s linear infinite;
+      z-index: 10;
+      mix-blend-mode: screen;
+      opacity: 0.9;
+      transform: translateZ(10px);
+    }
+
+    .card::after {
+      content: "";
+      position: absolute;
+      top: -6px;
+      left: -6px;
+      right: -6px;
+      bottom: -6px;
+      border-radius: 26px;
+      pointer-events: none;
+      background: radial-gradient(circle at 50% 50%, rgba(247, 178, 229, 0.4), transparent 70%);
+      animation: pulseGlow 3s ease-in-out infinite;
+      z-index: 9;
+    }
+
+    @keyframes flowingBorder {
+      0% {
+        background-position: 0% 0%;
+      }
+      50% {
+        background-position: 100% 100%;
+      }
+      100% {
+        background-position: 0% 0%;
+      }
+    }
+
+    @keyframes pulseGlow {
+      0% {
+        opacity: 0.3;
+        transform: scale(0.98);
+      }
+      50% {
+        opacity: 0.7;
+        transform: scale(1.02);
+      }
+      100% {
+        opacity: 0.3;
+        transform: scale(0.98);
+      }
+    }
+
+    @keyframes floating {
+      0% {
+        transform: perspective(700px) rotateX(0deg) rotateY(0deg) translateY(0px);
+      }
+      50% {
+        transform: perspective(700px) rotateX(3deg) rotateY(2deg) translateY(-10px);
+      }
+      100% {
+        transform: perspective(700px) rotateX(0deg) rotateY(0deg) translateY(0px);
+      }
+    }
+
+    .card {
+      transform-style: preserve-3d;
+      transition: transform 0.3s ease-out;
+    }
+
+    .card:hover {
+      transform: perspective(1000px) rotateX(2deg) rotateY(2deg) translateY(-2px);
+    }
+
+    .avatar {
+      width: 110px;
+      height: 110px;
+      border-radius: 50%;
+      border: 2px solid #aaa;
+      object-fit: cover;
+      flex-shrink: 0;
+      filter: drop-shadow(0 0 4px #f7b2e5cc);
+      user-select: none;
+    }
+
+    .profile-info {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 0.6rem;
+    }
+
+    h1 {
+      font-weight: 500;
+      font-size: 2.2rem;
+      user-select: text;
+      background: linear-gradient(90deg, #f7b2e5, #b2e3f7, #f7b2e5);
+      background-size: 200% auto;
+      color: transparent;
+      -webkit-background-clip: text;
+      background-clip: text;
+      animation: shine 3s linear infinite;
+      text-shadow: 0 0 10px rgba(247, 178, 229, 0.3);
+    }
+
+    @keyframes shine {
+      to {
+        background-position: 200% center;
+      }
+    }
+
+    p {
+      font-weight: 300;
+      color: #ccc;
+      user-select: text;
+    }
+
+    .badges {
+      display: flex;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+      margin-top: 0.6rem;
+    }
+
+    .badge {
+      background: rgba(247, 178, 229, 0.1);
+      color: #f7b2e5;
+      font-size: 0.85rem;
+      font-weight: 500;
+      padding: 0.25rem 0.8rem;
+      border-radius: 9999px;
+      border: 1px solid rgba(247, 178, 229, 0.4);
+      user-select: none;
+      box-shadow:
+        0 0 8px 1px rgba(247, 178, 229, 0.3),
+        inset 0 0 4px rgba(247, 178, 229, 0.2);
+      transition: all 0.3s ease;
+      cursor: default;
+      white-space: nowrap;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .badge::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(
+        to bottom right,
+        rgba(255, 255, 255, 0.3) 0%,
+        rgba(247, 178, 229, 0.5) 50%,
+        transparent 100%
+      );
+      transform: rotate(30deg);
+      transition: all 0.4s ease;
+      opacity: 0;
+    }
+
+    .badge:hover {
+      background: rgba(247, 178, 229, 0.3);
+      color: #fff;
+      box-shadow:
+        0 0 12px 3px rgba(247, 178, 229, 0.7),
+        inset 0 0 6px rgba(247, 178, 229, 0.3);
+      transform: translateY(-1px);
+    }
+
+    .badge:hover::before {
+      opacity: 0.6;
+      animation: badgeGlow 2s linear infinite;
+    }
+
+    @keyframes badgeGlow {
+      0% {
+        transform: rotate(30deg) translateX(-100%);
+      }
+      100% {
+        transform: rotate(30deg) translateX(100%);
+      }
+    }
+
+    .socials {
+      display: flex;
+      gap: 1.2rem;
+      margin-top: 1rem;
+    }
+
+    .socials a {
+      color: #ccc;
+      text-decoration: none;
+      font-size: 1.5rem;
+      transition: color 0.3s ease;
+    }
+
+    .socials a:hover {
+      color: #f7b2e5;
+    }
+
+    .music-player {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: rgba(255, 255, 255, 0.09);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(20px);
+      border-radius: 10px;
+      padding: 10px;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      z-index: 100;
+    }
+
+    .music-controls {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    #playPauseBtn {
+      background: none;
+      border: none;
+      color: #f7b2e5;
+      font-size: 20px;
+      cursor: pointer;
+      padding: 5px;
+    }
+
+    #volumeSlider {
+      width: 100px;
+      accent-color: #f7b2e5;
+    }
+
+  </style>
+</head>
+<body>
+  <style>
+    .profile-name-badges {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      position: relative; /* needed for tooltip positioning */
+    }
+
+    .name-badge {
+      width: 24px;
+      height: 24px;
+      cursor: pointer;
+      position: relative; /* for tooltip positioning */
+      transition: transform 0.2s ease;
+    }
+
+    .name-badge:hover {
+      transform: scale(1.3);
+    }
+
+    /* Tooltip styling */
+    .name-badge::after {
+      content: attr(data-tooltip);
+      position: absolute;
+      bottom: 125%;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: rgba(0, 0, 0, 0.75);
+      color: white;
+      padding: 6px 10px;
+      border-radius: 6px;
+      white-space: nowrap;
+      font-size: 0.8rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+      z-index: 100;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+    }
+
+    /* Arrow below tooltip */
+    .name-badge::before {
+      content: "";
+      position: absolute;
+      bottom: 115%;
+      left: 50%;
+      transform: translateX(-50%);
+      border-width: 6px;
+      border-style: solid;
+      border-color: rgba(0, 0, 0, 0.75) transparent transparent transparent;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+      z-index: 101;
+    }
+
+    .name-badge:hover::after,
+    .name-badge:hover::before {
+      opacity: 1;
+    }
+  </style>
+
+  <div class="card" id="card">
+    <img
+      src="https://i.pinimg.com/736x/48/40/22/4840228af040c5c64cb217c6ad2622f9.jpg"
+      alt="Anime Girl Avatar"
+      class="avatar"
+      id="avatar"
+    />
+    <div class="profile-info">
+      <div class="profile-name-badges">
+        <h1 style="margin: 0;">Miyuki</h1>
+        <img
+          src="https://files.catbox.moe/qzvr9h.png"
+          alt="Mod"
+          class="name-badge"
+          data-tooltip="Mod Badge"
+        />
+        <img
+          src="https://files.catbox.moe/2rb7l1.gif"
+          alt="Nitro"
+          class="name-badge"
+          data-tooltip="Nitro Badge"
+        />
+		<img
+          src="https://media.tenor.com/ouQzDmgC9CwAAAAj/miku-vocaloid.gif"
+          alt="Nitro"
+          class="name-badge"
+          data-tooltip="Nitro Badge"
+        />
+      </div>
+      <p>Digital artist & dream hater | slit my wrist</p>
+      <div class="badges" id="badges">
+        <div class="badge">femboy.exe</div>
+        <div class="badge">cat.exe</div>
+        <div class="badge">gore.exe</div>
+      </div>
+      <div class="socials">
+        <a href="#" title="Discord" aria-label="Discord">
+          <img
+            src="https://cdn-icons-png.flaticon.com/512/2111/2111370.png"
+            alt="Discord"
+            width="24"
+          />
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Mouse tracking variables
+    let mouseX = 50;
+    let mouseY = 50;
+    
+    // Track mouse movement
+    document.addEventListener('mousemove', (e) => {
+      mouseX = (e.clientX / window.innerWidth) * 100;
+      mouseY = (e.clientY / window.innerHeight) * 100;
+      document.documentElement.style.setProperty('--mouse-x', `${mouseX}%`);
+      document.documentElement.style.setProperty('--mouse-y', `${mouseY}%`);
+      
+      // Make card follow mouse
+      const card = document.getElementById('card');
+      const rect = card.getBoundingClientRect();
+      const cardX = rect.left + rect.width / 2;
+      const cardY = rect.top + rect.height / 2;
+      // Calculate angles with cap
+      let angleX = (cardY - e.clientY) * 0.03; // Increased sensitivity
+      let angleY = (e.clientX - cardX) * 0.03; // Increased sensitivity
+      
+      // Cap the angles at 20 degrees maximum rotation for more dramatic effect
+      angleX = Math.min(Math.max(angleX, -20), 20);
+      angleY = Math.min(Math.max(angleY, -20), 20);
+      
+      card.style.transform = `perspective(1000px) rotateX(${angleX}deg) rotateY(${angleY}deg) translateY(-2px)`;
+      
+      const musicPlayer = document.querySelector('.music-player');
+      const musicAngleX = angleX * 0.3;
+      const musicAngleY = angleY * 0.3;
+      musicPlayer.style.transform = `rotateX(${musicAngleX}deg) rotateY(${musicAngleY}deg)`;
+    });
+
+    // Optimized star generation
+    const starCount = 200; // More stars
+    const bodyElement = document.body;
+    const starColors = ['#f7b2e5', '#b2e3f7', '#ffffff', '#e5b2f7', '#b2f7e5'];
+    
+    // Create a document fragment for better performance
+    const fragment = document.createDocumentFragment();
+    
+    for (let i = 0; i < starCount; i++) {
+      const star = document.createElement('div');
+      star.classList.add('star');
+      
+      // Random properties with constrained ranges
+      const size = Math.random() * 2 + 0.5; // Slightly larger stars
+      const posX = Math.random() * 100;
+      const posY = Math.random() * 100;
+      const duration = Math.random() * 8 + 3; // Shorter duration
+      const delay = Math.random() * 3;
+      const opacity = Math.random() * 0.6 + 0.2; // Increased visibility
+      const color = starColors[Math.floor(Math.random() * starColors.length)];
+      
+      // Apply styles
+      star.style.cssText = `
+        width: ${size}px;
+        height: ${size}px;
+        left: ${posX}%;
+        top: ${posY}%;
+        --duration: ${duration}s;
+        --delay: ${delay}s;
+        --opacity: ${opacity};
+        color: ${color};
+      `;
+      
+      fragment.appendChild(star);
+    }
+    
+    bodyElement.appendChild(fragment);
+
+</script>
+<div class="music-player" aria-label="Music player controls">
+  <img
+    src="https://i.pinimg.com/236x/15/dc/72/15dc72f2118a052e68471bf1a540eeab.jpg"
+    alt="Profile Picture"
+    class="pfp"
+    draggable="false"
+  />
+  <button id="playPauseBtn" aria-label="Play/Pause Music" title="Play/Pause">
+    <svg
+      id="icon"
+      xmlns="http://www.w3.org/2000/svg"
+      width="20"
+      height="20"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="#f7b2e5"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    >
+      <polygon points="5 3 19 12 5 21 5 3" />
+    </svg>
+  </button>
+  <input
+    type="range"
+    id="volumeSlider"
+    min="0"
+    max="1"
+    step="0.01"
+    value="0.15"
+    aria-label="Volume control"
+    title="Volume"
+  />
+</div>
+
+<audio id="bgMusic" loop>
+  <source src="https://files.catbox.moe/xx0p9f.mp3" type="audio/mpeg" />
+</audio>
+
+<style>
+  .music-player {
+    position: fixed;
+    bottom: 20px;   /* changed from top to bottom */
+    right: 20px;
+    background: rgba(255, 255, 255, 0.09);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(20px);
+    border-radius: 20px;
+    padding: 6px 10px;         /* smaller padding */
+    display: flex;
+    gap: 8px;                  /* smaller gap */
+    align-items: center;
+    z-index: 100;
+    filter: drop-shadow(0 0 10px rgba(247, 178, 229, 0.5));
+    box-shadow:
+      0 0 20px 2px rgba(247, 178, 229, 0.3),
+      0 0 30px 5px rgba(247, 178, 229, 0.2),
+      inset 0 0 20px 2px rgba(247, 178, 229, 0.1);
+    transform-style: preserve-3d;
+  }
+
+  .pfp {
+    width: 30px;               /* smaller profile pic */
+    height: 30px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #f7b2e5cc;
+    filter: drop-shadow(0 0 4px #f7b2e5cc);
+    user-select: none;
+  }
+
+  #playPauseBtn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    user-select: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.15s ease;
+  }
+
+  #playPauseBtn svg {
+    stroke: #f7b2e5;
+    width: 16px;               /* smaller icon */
+    height: 16px;
+    transition: all 0.3s ease;
+  }
+
+  #playPauseBtn:hover svg {
+    stroke: #fff;
+    filter: drop-shadow(0 0 4px rgba(247, 178, 229, 0.8));
+  }
+
+  #playPauseBtn:hover {
+    transform: scale(1.15);
+  }
+
+  #volumeSlider {
+    width: 60px;               /* smaller slider */
+    accent-color: #f7b2e5;
+    cursor: pointer;
+  }
+
+  /* Pulse animation for vibe effect */
+  @keyframes pulse {
+    0% {
+      transform: scale(1);
+      filter: drop-shadow(0 0 4px rgba(247, 178, 229, 0.8));
+    }
+    50% {
+      transform: scale(1.1);
+      filter: drop-shadow(0 0 12px rgba(247, 178, 229, 0.8));
+    }
+    100% {
+      transform: scale(1);
+      filter: drop-shadow(0 0 4px rgba(247, 178, 229, 0.8));
+    }
+  }
+
+  /* Class to trigger pulse */
+  .playing {
+    animation: pulse 1s infinite ease-in-out;
+  }
+</style>
+
+<script>
+  const music = document.getElementById("bgMusic");
+  const playPauseBtn = document.getElementById("playPauseBtn");
+  const volumeSlider = document.getElementById("volumeSlider");
+  const icon = document.getElementById("icon");
+
+  // SVG icons for play and pause
+  const playIcon = `<polygon points="5 3 19 12 5 21 5 3" />`;
+  const pauseIcon = `
+    <rect x="6" y="4" width="4" height="16" />
+    <rect x="14" y="4" width="4" height="16" />
+  `;
+
+  // Set initial volume from slider
+  music.volume = volumeSlider.value;
+
+  // Try to auto-play (may be blocked by browser)
+  const playPromise = music.play();
+
+  if (playPromise !== undefined) {
+    playPromise
+      .then(() => {
+        setPlayingState(true);
+      })
+      .catch((error) => {
+        console.log("Auto-play prevented:", error);
+        setPlayingState(false);
+      });
+  }
+
+  function setPlayingState(isPlaying) {
+    if (isPlaying) {
+      icon.innerHTML = pauseIcon;
+      playPauseBtn.classList.add("playing");
+    } else {
+      icon.innerHTML = playIcon;
+      playPauseBtn.classList.remove("playing");
+    }
+  }
+
+  playPauseBtn.addEventListener("click", () => {
+    if (music.paused) {
+      music.currentTime = 0;
+      music.play();
+      setPlayingState(true);
+    } else {
+      music.pause();
+      setPlayingState(false);
+    }
+  });
+
+  volumeSlider.addEventListener("input", () => {
+    music.volume = volumeSlider.value;
+  });
+</script>
+</body>
+</html>
